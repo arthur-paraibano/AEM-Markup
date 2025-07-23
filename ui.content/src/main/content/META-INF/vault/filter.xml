@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspaceFilter version="1.0">
+    <filter root="/conf/markuptest" mode="merge"/>
+    <filter root="/content/markuptest" mode="merge"/>
+    <filter root="/content/dam/markuptest/asset.jpg" mode="merge"/>
+    <filter root="/content/experience-fragments/markuptest" mode="merge"/>
+</workspaceFilter>

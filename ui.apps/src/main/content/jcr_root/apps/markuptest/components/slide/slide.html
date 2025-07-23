@@ -1,0 +1,14 @@
+<img
+    data-sly-use.image="com.adobe.cq.wcm.core.components.models.Image"
+    data-sly-use.slide="com.adobe.aem.guides.wknd.core.models.Slide"
+    class="bd-placeholder-img" src="${image.src}"
+  alt="&{image.title}" width="100%" height="100%">
+<div class="container">
+  <div class="carousel-caption ${properties.alignment}">
+    <h1>${slide.title}</h1>
+    <p>${slide.description}</p>
+    <p data-sly-test="${properties.buttonName}">
+      <a class="btn btn-lg btn-primary" href="${slide.internalLink ? slide.internalLink : slide.externalLink}" target="_blank">${slide.buttonName}</a>
+    </p>
+  </div>
+</div>

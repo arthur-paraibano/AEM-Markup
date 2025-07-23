@@ -1,0 +1,16 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/content/markuptest/us/en/Homepage.html">Markup</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+      aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div data-sly-use.navigation="com.adobe.cq.wcm.core.components.models.Navigation"
+      data-sly-use.template="core/wcm/components/commons/v1/templates.html" data-sly-use.groupTemplate="group.html"
+      data-sly-call="${groupTemplate.group @ items=navigation.items}"
+      data-sly-test.hasContent="${navigation.items.size > 0}" itemscope
+      itemtype="http://schema.org/SiteNavigationElement" data-cmp-data-layer="${navigation.data.json}"
+      aria-label="${navigation.accessibilityLabel}" class="collapse navbar-collapse" id="navbarCollapse">
+    </div>
+  </div>
+</nav>
