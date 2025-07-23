@@ -7,7 +7,7 @@
   <div class="carousel-caption ${properties.alignment}">
     <h1>${slide.title}</h1>
     <p>${slide.description}</p>
-    <p data-sly-test="${properties.buttonName}">
+    <p data-sly-test="${slide.buttonName}">
       <a class="btn btn-lg btn-primary" href="${slide.internalLink ? slide.internalLink : slide.externalLink}" target="_blank">${slide.buttonName}</a>
     </p>
   </div>
