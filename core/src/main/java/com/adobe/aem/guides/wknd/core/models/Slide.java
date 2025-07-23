@@ -1,7 +1,6 @@
 package com.adobe.aem.guides.wknd.core.models;
 
 public interface Slide {
-    
     String getAlignment();
 
     String getTitle();
@@ -13,5 +12,4 @@ public interface Slide {
     String getInternalLink();
 
     String getExternalLink();
-
 }

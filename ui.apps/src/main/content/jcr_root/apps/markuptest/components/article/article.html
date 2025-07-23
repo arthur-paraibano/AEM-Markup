@@ -1,9 +1,11 @@
-<template data-sly-template.contentFragment="${@ fragment='The content fragment', fragmentPath='', wcmmode='WCM mode'}">
-    <div class="col-lg-4">
-        <img class="bd-placeholder-img rounded-circle" src="${fragment.elements[0].value}"
-            alt="${fragment.elements[1].value}" width="140" height="140">
+<template data-sly-template.contentFragment="${@ fragment='The content fragment', fragmentPath='', wcmmode=wcmmode}">
+    <div class="col-lg-4 d-flex flex-column justify-content-between">
+        <div>
+            <img class="bd-placeholder-img rounded-circle" src="${fragment.elements[0].value}"
+                 alt="Profile 01" width="140" height="140">
+        </div>
         <h2>${fragment.elements[1].value}</h2>
         ${fragment.elements[2].value @ context='html'}
-        <p><a class="btn btn-secondary" href="#" target="_blank">View details »</a></p>
+        <p><a class="btn btn-secondary" href="/content/BootcampAemVilt/us/en/Artigo.html?id=${fragment.name}">View details »</a></p>
     </div>
 </template>

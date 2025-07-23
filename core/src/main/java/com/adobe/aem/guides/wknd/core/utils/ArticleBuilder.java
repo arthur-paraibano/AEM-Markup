@@ -1,8 +1,8 @@
 package com.adobe.aem.guides.wknd.core.utils;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -22,86 +22,75 @@ import com.day.cq.search.QueryBuilder;
 import com.day.cq.search.result.Hit;
 import com.day.cq.search.result.SearchResult;
 
+/*
+ * Recebe um ContentFragment faz a conversão para um objeto Article
+ */
 public class ArticleBuilder {
 
-    // identica que esta class serea invocada via request http
+    // Identifica que a classe será invocada via requests HTTP
     private SlingHttpServletRequest request;
-
-    // Utilizado para identificar o resource correto (model) dentro do AEM
-    private ResourceResolver resourceResolver;
-
-    // Utilizado para efetuar a pesquisa e recuperar o content fragment em questão
+    // Identifica o model dentro do AEM
+    private ResourceResolver resolver;
+    // Responsável pelas queries por encontrar o Content Fragment correto
     private QueryBuilder queryBuilder;
 
-    public ArticleBuilder(SlingHttpServletRequest request, ResourceResolver resourceResolver) {
+    public ArticleBuilder(SlingHttpServletRequest request, ResourceResolver resolver) {
         this.request = request;
-        this.resourceResolver = resourceResolver;
+        this.resolver = resolver;
         this.queryBuilder = request.getResourceResolver().adaptTo(QueryBuilder.class);
     }
 
-    private Map<String, String> initializeMap(String cfModel, String fragmentname) {
-
-        final Map<String, String> parametersMap = new HashMap<String, String>();
-
-        parametersMap.put("type", "dam:Asset");
-        parametersMap.put("path", "/content/dam");
-        parametersMap.put("boolproperty", "jcr:content/contentFragment");
-        parametersMap.put("boolproperty.value", "true");
-        parametersMap.put("1_property", "jcr:content/data/cq:model");
-        parametersMap.put("2_property", "jcr:content/cq:name");
-        parametersMap.put("1_property.value", cfModel);
-        parametersMap.put("2_property.value", fragmentname);
-
-        return parametersMap;
+    private Map<String, String> initializeMap(String cfModel, String fragmentName) {
+        final Map<String, String> paramsMap = new HashMap<String, String>();
+        paramsMap.put("type", "dam:Asset");
+        paramsMap.put("path", "/content/dam");
+        paramsMap.put("boolproperty", "jcr:content/contentFragment");
+        paramsMap.put("boolproperty.value", "true");
+        paramsMap.put("1_property", "jcr:content/data/cq:model");
+        paramsMap.put("2_property", "jcr:content/cq:name");
+        paramsMap.put("1_property.value", cfModel);
+        paramsMap.put("2_property.value", fragmentName);
+        return paramsMap;
     }
 
-    private SearchResult executeQuery(Map<String, String> parametersMap) {
-
-        Query query = queryBuilder.createQuery(PredicateGroup.create(parametersMap),
+    private SearchResult executeQuery(Map<String, String> paramsMap) {
+        Query query = queryBuilder.createQuery(PredicateGroup.create(paramsMap),
                 request.getResourceResolver().adaptTo(Session.class));
-
         return query.getResult();
     }
 
-    public void buildArticle(Article article, String cfModel, String fragmentname) {
-        // Define os parametrops da query
-        Map<String, String> parametersMap = initializeMap(cfModel, fragmentname);
-
-        SearchResult result = executeQuery(parametersMap);
-
-        for (Hit hit : result.getHits()) {
-
-            // Recupera o content fragment
+    public void buildArticle(Article article, String cfModel, String fragmentName) {
+        Map<String, String> paramsMap = initializeMap(cfModel, fragmentName); // params da query
+        SearchResult result = executeQuery(paramsMap); // executa a query
+        for (Hit hit : result.getHits()) { // iterar o result
             ContentFragment cfArticle = getContentFragment(hit);
-
             if (cfArticle != null) {
                 article.setTitle(getTextValue(cfArticle, "title"));
                 article.setAuthor(getTextValue(cfArticle, "author"));
+                article.setTitle(getTextValue(cfArticle, "title"));
                 article.setDate(getDateValue(cfArticle, "date"));
-                article.setThumbnail(getTextValue(cfArticle, "thumbnail"));
                 article.setDescription(getTextValue(cfArticle, "description"));
+                article.setThumbnail(getTextValue(cfArticle, "thumbnail"));
                 article.setText(getTextValue(cfArticle, "text"));
                 article.setDocuments(getDocumentList(getListValue(cfArticle, "documents")));
             }
         }
     }
 
-    private List<Document> getDocumentList(String[] documentsPath) {
-
-        List<Document> documents = new LinkedList<>();
-        for (String documentPath : documentsPath) {
-            ContentFragment cfDocument = getContentFragmentByPath(resourceResolver, documentPath);
-
+    private List<Document> getDocumentList(String[] filepaths) {
+        List<Document> documents = new ArrayList<>();
+        for (String filepath : filepaths) {
+            ContentFragment cfDocument = getContentFragmentByFilepath(resolver, filepath);
             Document document = new Document();
+            document.setFile(getTextValue(cfDocument, "file"));
             document.setName(getTextValue(cfDocument, "fileName"));
-            document.setFilePath(getTextValue(cfDocument, "file"));
             documents.add(document);
         }
         return documents;
     }
 
-    private ContentFragment getContentFragmentByPath(ResourceResolver resourceResolver, String cfPath) {
-        return resourceResolver.getResource(cfPath).adaptTo(ContentFragment.class);
+    private ContentFragment getContentFragmentByFilepath(ResourceResolver resolver, String cfPath) {
+        return Objects.requireNonNull(resolver.getResource(cfPath)).adaptTo(ContentFragment.class);
     }
 
     private String[] getListValue(ContentFragment cf, String attribute) {
@@ -117,7 +106,6 @@ public class ArticleBuilder {
     }
 
     private ContentFragment getContentFragment(Hit hit) {
-
         ContentFragment cf = null;
         try {
             cf = hit.getResource().adaptTo(ContentFragment.class);
@@ -126,4 +114,5 @@ public class ArticleBuilder {
         }
         return cf;
     }
+
 }

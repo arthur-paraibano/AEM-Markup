@@ -1,10 +1,10 @@
 <sly data-sly-use.list="com.adobe.cq.wcm.core.components.models.contentfragment.ContentFragmentList"
-     data-sly-test="${list.listItems.size>0}" data-sly-use.fragmentTemplate="markuptest/components/article/article.html">
+    data-sly-test="${list.listItems.size>0}" data-sly-use.fragmentTemplate="markuptest/components/article/article.html">
     <div data-sly-list.fragment="${list.listItems}" class="row">
         <sly data-sly-call="${fragmentTemplate.contentFragment @ fragment=fragment, wcmmode=wcmmode}"></sly>
     </div>
 </sly>
 
 <sly data-sly-use.template="core/wcm/components/commons/v1/templates.html"
-     data-sly-call="${template.placeholder @ isEmpty=list.listItems.size == 0, classAppend='cq-dd-contentfragmentlist'}"></sly>
-
+    data-sly-call="${template.placeholder @ isEmpty=list.listItems.size == 0, classAppend='cq-dd-contentfragmentlist'}">
+</sly>

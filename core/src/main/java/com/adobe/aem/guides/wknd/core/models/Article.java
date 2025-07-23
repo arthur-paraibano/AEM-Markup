@@ -4,32 +4,31 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 public interface Article {
-
     void setTitle(String title);
-
-    void setAuthor(String author);
-
-    void setDate(GregorianCalendar date);
-
-    void setThumbnail(String thumbnail);
-
-    void setDescription(String description);
-
-    void setText(String text);
-
-    void setDocuments(List<Document> documents);
 
     String getTitle();
 
-    String getAuthor();
-
-    GregorianCalendar getDate();
-
-    String getThumbnail();
+    void setDescription(String description);
 
     String getDescription();
 
+    void setAuthor(String author);
+
+    String getAuthor();
+
+    void setDate(GregorianCalendar date);
+
+    GregorianCalendar getDate();
+
+    void setThumbnail(String thumbnail);
+
+    String getThumbnail();
+
+    void setText(String text);
+
     String getText();
+
+    void setDocuments(List<Document> documents);
 
     List<Document> getDocuments();
 }

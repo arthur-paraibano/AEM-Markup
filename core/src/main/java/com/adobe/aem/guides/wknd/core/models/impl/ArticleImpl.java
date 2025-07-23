@@ -15,45 +15,34 @@ import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 
 import com.adobe.aem.guides.wknd.core.models.Article;
 import com.adobe.aem.guides.wknd.core.models.Document;
+// import com.adobe.aem.guides.wknd.core.utils.ArticleBuilder;
 import com.adobe.aem.guides.wknd.core.utils.ArticleBuilder;
 
-@Model(
-        adaptables = SlingHttpServletRequest.class,
-        adapters = Article.class,
-        defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL,
-        resourceType = {ArticleImpl.RESOURCE_TYPE}
-)
+@Model(adaptables = { SlingHttpServletRequest.class }, adapters = {
+        Article.class }, defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL, resourceType = ArticleImpl.RESOURCE_TYPE)
 public class ArticleImpl implements Article {
 
-    protected static final String RESOURCE_TYPE = "markeup/models/components/article";
+    protected static final String RESOURCE_TYPE = "BootcampAemVilt/models/components/article";
 
     private String title;
-
-    private String author;
-
-    private GregorianCalendar date;
-
-    private String thumbnail;
-
     private String description;
-
+    private String author;
+    private GregorianCalendar date;
+    private String thumbnail;
     private String text;
-
     private List<Document> documents;
 
     @Self
     private SlingHttpServletRequest request;
-
     @SlingObject
-    private ResourceResolver resourceResolver;
-
+    private ResourceResolver resolver;
     @RequestAttribute
     private String fragmentName;
 
     @PostConstruct
     protected void init() {
-        ArticleBuilder articleBuilder = new ArticleBuilder(request, resourceResolver);
-        articleBuilder.buildArticle(this, "/conf/markuptest/settings/dam/cfm/models/artigo", fragmentName);
+        ArticleBuilder builder = new ArticleBuilder(request, resolver);
+        builder.buildArticle(this, "/conf/BootcampAemVilt/settings/dam/cfm/models/artigo", fragmentName);
     }
 
     @Override
@@ -62,18 +51,8 @@ public class ArticleImpl implements Article {
     }
 
     @Override
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    @Override
-    public void setDate(GregorianCalendar date) {
-        this.date = date;
-    }
-
-    @Override
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
+    public String getTitle() {
+        return title;
     }
 
     @Override
@@ -82,18 +61,13 @@ public class ArticleImpl implements Article {
     }
 
     @Override
-    public void setText(String text) {
-        this.text = text;
+    public String getDescription() {
+        return description;
     }
 
     @Override
-    public void setDocuments(List<Document> documents) {
-        this.documents = documents;
-    }
-
-    @Override
-    public String getTitle() {
-        return title;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     @Override
@@ -102,8 +76,18 @@ public class ArticleImpl implements Article {
     }
 
     @Override
+    public void setDate(GregorianCalendar date) {
+        this.date = date;
+    }
+
+    @Override
     public GregorianCalendar getDate() {
         return date;
+    }
+
+    @Override
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
     @Override
@@ -112,13 +96,18 @@ public class ArticleImpl implements Article {
     }
 
     @Override
-    public String getDescription() {
-        return description;
+    public void setText(String text) {
+        this.text = text;
     }
 
     @Override
     public String getText() {
         return text;
+    }
+
+    @Override
+    public void setDocuments(List<Document> documents) {
+        this.documents = documents;
     }
 
     @Override
