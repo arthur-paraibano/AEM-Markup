@@ -15,7 +15,7 @@ import com.adobe.aem.guides.wknd.core.models.Slide;
 )
 public class SlideImpl implements Slide {
 
-    protected static final String RESOURCE_TYPE = "BootcampAemVilt/models/components/slide";
+    protected static final String RESOURCE_TYPE = "markeup/models/components/slide";
 
     @ValueMapValue
     private String alignment;

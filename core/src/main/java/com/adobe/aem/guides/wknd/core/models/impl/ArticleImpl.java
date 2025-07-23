@@ -22,7 +22,7 @@ import com.adobe.aem.guides.wknd.core.utils.ArticleBuilder;
         Article.class }, defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL, resourceType = ArticleImpl.RESOURCE_TYPE)
 public class ArticleImpl implements Article {
 
-    protected static final String RESOURCE_TYPE = "BootcampAemVilt/models/components/article";
+    protected static final String RESOURCE_TYPE = "markeup/models/components/article";
 
     private String title;
     private String description;
@@ -42,7 +42,7 @@ public class ArticleImpl implements Article {
     @PostConstruct
     protected void init() {
         ArticleBuilder builder = new ArticleBuilder(request, resolver);
-        builder.buildArticle(this, "/conf/BootcampAemVilt/settings/dam/cfm/models/artigo", fragmentName);
+        builder.buildArticle(this, "/conf/markeup/settings/dam/cfm/models/artigo", fragmentName);
     }
 
     @Override
