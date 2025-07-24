@@ -42,7 +42,7 @@ public class ArticleImpl implements Article {
     @PostConstruct
     protected void init() {
         ArticleBuilder builder = new ArticleBuilder(request, resolver);
-        builder.buildArticle(this, "/conf/markeup/settings/dam/cfm/models/artigo", fragmentName);
+        builder.buildArticle(this, "/conf/markuptest/settings/dam/cfm/models/artigo", fragmentName);
     }
 
     @Override
