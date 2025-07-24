@@ -1,0 +1,12 @@
+<div data-sly-use.article="${'com.adobe.aem.guides.wknd.core.models.Article' @ fragmentName=request.requestParameterMap['id'][0].toString}"
+     class="article-container my-lg-5">
+    <h2>${article.title}</h2>
+    <p><b>Author:</b> ${article.author}</p>
+    <p><b>Date:</b> ${'dd/MM/yyyy' @ format=article.date}</p>
+    <h5>Leia o artigo:</h5>
+    <p>${article.text}</p>
+    <h6>Apêndice:</h6>
+    <div data-sly-list.document="${article.documents}">
+        <p><a class="link-info" href="${document.file}" target="_blank">${document.name}</a></p>
+    </div>
+</div>
