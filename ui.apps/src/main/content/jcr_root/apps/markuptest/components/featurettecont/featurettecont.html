@@ -1,0 +1,14 @@
+<hr class="featurette-divider">
+<div data-sly-use.image="com.adobe.cq.wcm.core.components.models.Image"
+  class="row featurette ${properties.alignment} mx-5">
+  <div class="col-md-7 order-md-2">
+    <h2 class="featurette-heading">${properties.title} <span class="text-muted">${properties.snippet}</span></h2>
+    <p class="lead">${properties.description}</p>
+  </div>
+  <div class="col-md-5 order-md-1 d-flex align-items-center">
+    <sly data-sly-test="${image.src}">
+      <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" src="${image.src}"
+        alt="Highlight 01" width="100%" height="100%">
+    </sly>
+  </div>
+</div>
